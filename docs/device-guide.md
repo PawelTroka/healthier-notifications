@@ -17,7 +17,7 @@ This is a starting point for review, not an automatically applied policy:
 | Notification type | Phone | Watch |
 | --- | --- | --- |
 | Personal direct messages from every communicator app | Keep direct-message notifications; remove unrelated social/promotional categories | Allow the communicator apps; filter unwanted categories at their source |
-| Clock and wake-up alarms | Always preserve; weekday wake-up at 10:09 Warsaw time, including during quiet hours | Preserve deliberately configured native watch alarms; test separately |
+| Clock and wake-up alarms | Always preserve, including during quiet hours; retain weekday work prep 10:12 and work now 10:14 Warsaw time | Preserve deliberately configured native watch alarms; test separately |
 | Calendar reminders and genuinely time-sensitive tasks | Keep selected reminders | Allow only those useful away from the phone |
 | Work direct messages, Teams chat and mentions | Keep useful work messages during Monday-Friday 10:14-18:14 Europe/Warsaw; suppress desktop duplicates | Follow the same work boundary using app quiet hours and verified watch behavior |
 | Email, news, social reactions, shopping promotions | Silence or turn off the unnecessary categories | Usually exclude from the app allowlist |
@@ -36,17 +36,17 @@ The automated backend is deliberately narrow: on supported Android versions, rev
 
 The work window is **Monday-Friday, 10:14-18:14, Europe/Warsaw**, as requested. Preserve those exact minute values. Personal direct messages from all communicator apps remain separate from this work schedule. Confirmed sleep choices are recorded in the private profile; the public template leaves sleep hours unset. Before using phone-wide DND, review wanted exceptions so a work quiet period does not accidentally silence personal direct messages. Verify an ordinary alarm and a wanted call with the chosen settings. Phone DND, silent channels, Teams quiet time, and watch focus settings are separate controls.
 
-## Wake-up alarm: 10:09 on weekdays
+## Preserve existing weekday alarms
 
-The user's chosen wake-up time is **10:09 Monday-Friday, Europe/Warsaw**, to be at the desk by **10:14**. This alarm is an explicit exception to work quiet hours and sleep/DND. Preserve other deliberately configured clock alarms too.
+The user confirmed the original enabled Monday-Friday alarms were correct: **work prep at 10:12** and **work now at 10:14**, Europe/Warsaw. Keep their labels, times, recurrence and enabled state. The earlier 10:09 suggestion must not replace an existing alarm or add a separate one; `schedule.wake_alarm` is now `null`. Clock alarms remain explicit exceptions to work quiet hours and sleep/DND. Preserve every other deliberately configured clock alarm too.
 
-Configure the recurring alarm in the actual Clock app when the phone is connected. Check its selected weekdays, enabled state, sound and alarm volume; allow alarms in the phone's quiet-mode settings. Preserve the clock app's notification permission. If it is a third-party app, classify it as `reminders` with `phone: "preserve"` so whole-app blocking is rejected.
+Inspect the existing alarms in the actual Clock app when the phone is connected. Check its selected weekdays, enabled state, sound and alarm volume; allow alarms in the phone's quiet-mode settings. Preserve the clock app's notification permission. If it is a third-party app, classify it as `reminders` with `phone: "preserve"` so whole-app blocking is rejected.
 
 Create a short test alarm while the phone is locked, DND/sleep is active, work notifications are quiet and the watch is disconnected. Confirm the phone alarm actually sounds. If a native Garmin alarm is also part of the wake-up setup, test it independently during Sleep Focus. An app-allowlist check does not establish whether an alarm will wake you.
 
-Remove the temporary test alarm afterward and leave the weekday 10:09 alarm enabled. Record `test.wake_alarm` as passed only after the recurring configuration and practical test are verified. The repository stores this desired alarm; its commands do not create the real device alarm automatically. Recheck the intended Warsaw time when travelling.
+Remove only the temporary test alarm afterward and verify the existing work prep 10:12 and work now 10:14 alarms remain enabled and unchanged. Record `test.wake_alarm` as passed only after the existing configuration and practical test are verified. Repository commands do not create or change Clock alarms automatically. Recheck the intended Warsaw time when travelling.
 
-In the connected session, the user confirmed a test alarm sounded clearly with secure keyguard locked, DND active and Bluetooth off. The test alarm was removed, the recurring alarms preserved, and Bluetooth/DND restored. Because the test occurred during the work window, the stricter `test.wake_alarm` requirement for active work quiet hours remains pending.
+In the connected session, the user confirmed a test alarm sounded clearly with secure keyguard locked, DND active and Bluetooth off. The temporary test alarm was removed and Bluetooth/DND restored. At that time, work prep had mistakenly been moved to 10:09; the user subsequently corrected that change. See the [alarm-time correction](hardware-session.md#alarm-time-correction) for restoration status. Because the test occurred during the work window, the stricter `test.wake_alarm` requirement for active work quiet hours remains pending.
 
 ## Personal communicators: keep direct messages
 
@@ -113,7 +113,7 @@ Use benign test events and compare both devices:
 - One unwanted category: confirm the interruption is gone while the app still works as intended.
 - One app kept on the phone but blocked in Garmin Connect: confirm it stays on the phone and does not alert the watch.
 - Phone DND on and off: check the wanted call/message exception and an ordinary notification. Record whether Garmin follows it.
-- A short clock alarm with phone locked, sleep/DND active and Garmin disconnected: confirm it sounds, then verify the recurring weekday 10:09 alarm remains enabled. Record `test.wake_alarm` separately.
+- A short clock alarm with phone locked, sleep/DND active and Garmin disconnected: confirm it sounds, then verify the original weekday work prep 10:12 and work now 10:14 alarms remain enabled and unchanged. Record `test.wake_alarm` separately.
 - A Teams message while active on desktop, then after desktop inactivity. Check a Teams call separately.
 - Work notifications around 10:14 and 18:14 on a weekday, and during the weekend. Confirm personal direct messages still arrive outside work hours.
 - Watch normal, sleep, and activity modes: check the intended notification behavior and an ordinary local alarm.

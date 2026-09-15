@@ -32,11 +32,11 @@ This repo includes the maintainer's policy. Review it before using it on another
 | --- | --- |
 | Calls and personal direct messages | Keep across communicator apps; separate from work quiet hours |
 | Actionable work | Monday–Friday, **10:14–18:14**, Europe/Warsaw |
-| Clock alarms | Preserve during quiet hours and sleep/DND; weekday wake-up at **10:09** |
+| Clock alarms | Preserve during quiet hours and sleep/DND; retain weekday **work prep at 10:12** and **work now at 10:14** |
 | Deliberate reminders and safety/security alerts | Preserve |
 | Groups, promotions, reactions and other noise | Disable at the source where separable; record remaining mixed categories |
 
-The private profile records confirmed sleep choices. The public template leaves sleep hours unset and app rules empty; the installed-app inventory and personal profile stay in ignored `.local/` files. The first connected session on **2026-09-15** inspected an OPPO Find X9 Ultra (CPH2841), Android 16. The weekday preparation alarm was saved at **10:09**, enabled Monday–Friday with the default alarm sound; the enabled 10:14 reminder was preserved. **A test alarm sounded clearly with the phone locked, DND active and Bluetooth off.** The temporary alarm was removed and Bluetooth/DND restored. The user also confirmed one incoming alert reached both phone and watch. The stricter alarm test during work quiet hours and broader notification tests remain pending.
+The private profile records confirmed sleep choices. The public template leaves sleep hours unset and app rules empty; the installed-app inventory and personal profile stay in ignored `.local/` files. The first connected session on **2026-09-15** inspected an OPPO Find X9 Ultra (CPH2841), Android 16. The user confirmed that the original enabled weekday alarms—**work prep at 10:12** and **work now at 10:14**—were correct. Moving work prep to 10:09 was a setup mistake; the corrected policy preserves the original pair and requests no additional alarm. Device restoration is pending readback in the [session report](docs/hardware-session.md#alarm-time-correction). **A test alarm sounded clearly with the phone locked, DND active and Bluetooth off.** The temporary alarm was removed and Bluetooth/DND restored. The user also confirmed one incoming alert reached both phone and watch. The stricter alarm test during work quiet hours and broader notification tests remain pending.
 
 Garmin Connect identified **fenix 9 Pro - inReach, 51mm**, firmware **6.38**. The forwarding list was saved with 19 selected entries, and **Follow Do Not Disturb Behavior** was enabled. Native calls/texts/apps vibration was on; goal alerts and morning/evening reports were turned off. The watch sleep schedule now matches the confirmed private phone schedule, including Saturday's extension. Sleep Focus notifications stayed on, manual system DND stayed off, and a requested sync was followed by a Connected device status. A single incoming alert reached both devices; delivery from every app and focus behavior still need testing. See the [connected-session report](docs/hardware-session.md) for the configuration and remaining checks.
 
@@ -49,7 +49,7 @@ Teams and the selected Outlook work account have quiet hours **18:14–10:14**, 
 | Whole-app Android notification permission | Explicit reviewed `allow`/`block` rules on supported Android 13+ devices | ADB reads the selected user's runtime permission before/after changes |
 | Direct messages versus groups, promotions, reactions | Guided Android channels and in-app settings | Dated manual checks and delivery tests |
 | Work schedule and desktop duplicate suppression | Guided in-app setup using the hours above | Manual check; the Python process is not a running scheduler |
-| Clock alarms, including weekday 10:09 wake-up | Preserve the clock app; configure the recurring alarm and quiet-mode exceptions on the device | Locked-phone alarm test during DND, without the watch connected |
+| Clock alarms, including the existing weekday pair | Preserve the clock app, existing labels/times and quiet-mode exceptions on the device | Clock configuration readback and a locked-phone alarm test during DND, without the watch connected |
 | Garmin forwarded-app allowlist | Guided Garmin Connect settings, with each chosen app recorded in policy | Per-app manual checks |
 | Watch focus, native wellness alerts and sleep | Guided watch setup | Manual checks against the actual model/firmware |
 
@@ -134,7 +134,7 @@ Without `--user`, the current Android user is selected. A work profile is a sepa
 
 Follow [the phone/watch guide](docs/device-guide.md). It covers communicator categories, Teams duplicates/quiet time, Garmin allowlisting, native watch alerts and realistic delivery tests. The selected work hours are recorded in the repo; this version applies the schedule through guided in-app setup.
 
-The **10:09 weekday wake-up alarm is a required setup check**, even though work notifications stay quiet until 10:14. Configure it in the actual Clock app and complete `test.wake_alarm`. Its enabled weekday configuration was read back and a locked-phone DND sound test passed with Bluetooth off. That test ran during work hours; the full check still requires testing while work quiet hours are active. Keep clock app rules as `phone: "preserve"`; use category `reminders` for any third-party alarm app.
+Preserve the original enabled weekday alarms: **work prep at 10:12** and **work now at 10:14**. `schedule.wake_alarm` is `null` because no separate new wake-up alarm is requested. The earlier 10:09 suggestion does not authorize changing or adding an alarm. Complete `test.wake_alarm` by checking the existing pair and alarm audibility through quiet settings. A locked-phone DND sound test passed with Bluetooth off; it ran during work hours, so the full check still requires testing while work quiet hours are active. Keep clock app rules as `phone: "preserve"`; use category `reminders` for any third-party alarm app.
 
 ```powershell
 python -m healthier_notifications checks

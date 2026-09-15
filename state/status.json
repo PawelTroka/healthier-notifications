@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-15T15:43:30+00:00",
+  "generated_at": "2026-09-15T15:57:23+00:00",
   "observed_at": "2026-09-15T15:42:23.143831+00:00",
-  "policy_hash": "7aabe459a755ec2ad2542cff4539a1c1f6824780e0c29e6df267eb580b839453",
+  "policy_hash": "bfc64a459734c411315f027db110764cbd6e2424499cd575496a0f7b1c939626",
   "device": {
     "manufacturer": "OPPO",
     "model": "CPH2841",
@@ -43,7 +43,7 @@
     {
       "id": "phone.sleep",
       "device": "phone",
-      "instruction": "Choose sleep hours and configure native Do Not Disturb with alarms allowed and desired favourite/repeated-caller exceptions. Preserve alarm volume and countdown timers. The weekday 10:09 wake-up alarm must sound even while sleep/Do Not Disturb or work quiet hours are active. Keep daytime incoming calls, including unknown numbers, reachable.",
+      "instruction": "Choose sleep hours and configure native Do Not Disturb with alarms allowed and desired favourite/repeated-caller exceptions. Preserve alarm volume and countdown timers. Preserve the existing enabled weekday work prep alarm at 10:12 and work now alarm at 10:14; clock alarms must still sound while sleep/Do Not Disturb or work quiet hours are active. Keep daytime incoming calls, including unknown numbers, reachable.",
       "status": "unverified",
       "checked_at": null
     },
@@ -71,7 +71,7 @@
     {
       "id": "test.wake_alarm",
       "device": "both",
-      "instruction": "Configure and verify a recurring clock wake-up alarm Monday-Friday at 10:09 Europe/Warsaw, giving 5 minutes to be at the desk by 10:14. Identify the actual clock app; keep its permission preserved and classify any third-party alarm app as reminders, never noise/admin. Keep other deliberately configured clock alarms intact. Check enabled weekdays, local timezone, alarm sound and usable alarm volume. Use a short test alarm with the phone locked, Do Not Disturb/sleep enabled, work quiet hours active and the Garmin disconnected: the phone must still wake you. If using a native watch alarm too, test it separately during Sleep Focus. Do not rely on notification mirroring as proof of alarm delivery. Remove only the temporary test alarm afterward, leaving the recurring 10:09 alarm enabled.",
+      "instruction": "Preserve the existing enabled Monday-Friday Clock alarms in Europe/Warsaw: work prep at 10:12 and work now at 10:14. The earlier 10:09 suggestion must not replace or add an alarm; no separate new wake-up alarm is requested. Identify the actual clock app; keep its permission preserved and classify any third-party alarm app as reminders, never noise/admin. Keep all other deliberately configured clock alarms intact. Check labels, times, enabled weekdays, local timezone, alarm sound and usable alarm volume. Use a short temporary test alarm with the phone locked, Do Not Disturb/sleep enabled, work quiet hours active and the Garmin disconnected: the phone alarm must still sound clearly. If using a native watch alarm too, test it separately during Sleep Focus. Do not rely on notification mirroring as proof of alarm delivery. Remove only the temporary test alarm afterward and verify the original work prep 10:12 and work now 10:14 alarms remain enabled and unchanged.",
       "status": "unverified",
       "checked_at": null
     },

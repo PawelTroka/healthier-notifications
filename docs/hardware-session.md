@@ -9,7 +9,7 @@ The installed-app inventory, confirmed sleep choices, device identifiers, screen
 | Area | Observed configuration | Verification still needed |
 | --- | --- | --- |
 | Android inventory | Connected phone and installed notification-permission metadata inspected | Reconnect and scan to detect later changes |
-| Weekday wake-up | Existing preparation alarm saved at **10:09 Monday–Friday**, enabled, using the default alarm sound; existing enabled **10:14** reminder preserved | Repeat the alarm test with work quiet hours active to complete the strict policy check |
+| Existing weekday alarms | Work prep was mistakenly changed from **10:12 to 10:09**, while work now stayed at **10:14**. The user confirmed the original times were correct; restoration is pending device readback | Restore and verify work prep **10:12** and preserve work now **10:14**; repeat the alarm test with work quiet hours active |
 | Alarm protection | Nonzero alarm volume; DND screen states alarms are unaffected; user confirmed the locked-phone DND test alarm sounded clearly | The completed test ran during work hours, so the work-quiet-hours condition remains untested |
 | Discord | Ten categories off: reactions, friend activity, gaming, polls, voice/live activity, forums, events, server messages, other server notifications and stages; **Direct messages** and **Incoming calls** preserved | Confirm wanted DMs/calls arrive; miscellaneous Other and Missed Messages remain mixed or unclear |
 | WhatsApp | **Group notifications**, **Chat history backup** and **Group join requests** turned off in Android settings; **Message notifications** remained enabled | Confirm direct messages and calls arrive, and unwanted group/administrative alerts stay quiet |
@@ -30,9 +30,13 @@ Telegram's two Groups exceptions and two Channels exceptions were removed with *
 
 In total, **33 Android notification categories** were disabled with before/after readback. Discord's disabled **Messages** category was specifically under **Server**; its separate **Direct messages** category stayed enabled. No whole-app notification permissions were changed. The refreshed inventory at **2026-09-15 15:42:23 UTC** showed all 203 selected permission records unchanged from the initial baseline. Groupon's only observed category was already off; Shazam exposed functional result/player controls, so neither received a change.
 
+### Alarm-time correction
+
+After reviewing the setup, the user confirmed that the original enabled weekday alarms were correct: **work prep at 10:12** and **work now at 10:14**. Changing work prep to 10:09 was a mistake. The public and private policies now preserve the original pair, with `schedule.wake_alarm: null`; no separate alarm is requested. Device restoration to 10:12 is pending readback. The earlier screenshots and sound-test records remain historical evidence.
+
 ### Alarm sound test and cleanup
 
-A temporary alarm fired at **16:56** while the secure keyguard was locked, DND was active (`zen_mode=1`) and Bluetooth was off (`bluetooth_on=0`). The user confirmed it sounded clearly, stopped it and unlocked the phone. The temporary alarm was then deleted and its absence verified; the recurring weekday 10:09 and 10:14 alarms remained enabled.
+A temporary alarm fired at **16:56** while the secure keyguard was locked, DND was active (`zen_mode=1`) and Bluetooth was off (`bluetooth_on=0`). The user confirmed it sounded clearly, stopped it and unlocked the phone. The temporary alarm was then deleted and its absence verified; the then-configured weekday 10:09 work prep and 10:14 work now alarms remained enabled. The work prep time was a mistaken change, subsequently rejected by the user as described above.
 
 Bluetooth was restored to on and DND to off. This establishes a passed **locked-phone + DND + Bluetooth-off sound test**. It does not complete `test.wake_alarm`: the test occurred during the work window, so its additional requirement for active work quiet hours remains pending. A native watch alarm, if used, also needs its separate Sleep Focus test.
 
@@ -77,7 +81,7 @@ Clock, Android category, Telegram, Teams, Outlook and Garmin Connect changes wer
 
 Private desired choices belong in `.local/policy.personal.json`. Detailed configuration observations are in `.local/native-setup.json`, including its `garmin` section; the raw UI evidence stays under `.local/ui/`. The private rules `test.phone_alarm_fallback` and `test.incoming_alert_pair` separately capture the completed alarm test/cleanup and the user-confirmed incoming alert on both devices. Adding a rule does not create an attestation or complete the broader `test.wake_alarm` or `test.delivery` checks. Practical checks must succeed before recording the corresponding `attest ... --result pass`.
 
-Seven scoped passes are now recorded locally: configuration checks for Discord, Teams, WhatsApp, Telegram and the Outlook work schedule, plus the two practical tests above. The broader policy and individual watch-source delivery checks remain pending. The private report was refreshed after recording these checks.
+Seven scoped passes were recorded under the previous private policy: configuration checks for Discord, Teams, WhatsApp, Telegram and the Outlook work schedule, plus the two practical tests above. The alarm-policy correction makes those attestations stale; their original records and hashes are retained as historical evidence. The broader policy and individual watch-source delivery checks remain pending. Refresh the private report against the corrected policy before relying on its status.
 
 Use the same private policy for later reconciliation:
 
