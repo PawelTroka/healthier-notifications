@@ -9,7 +9,7 @@ The installed-app inventory, confirmed sleep choices, device identifiers, screen
 | Area | Observed configuration | Verification still needed |
 | --- | --- | --- |
 | Android inventory | Connected phone and installed notification-permission metadata inspected | Reconnect and scan to detect later changes |
-| Existing weekday alarms | Work prep was mistakenly changed from **10:12 to 10:09**, while work now stayed at **10:14**. The user confirmed the original times were correct; restoration is pending device readback | Restore and verify work prep **10:12** and preserve work now **10:14**; repeat the alarm test with work quiet hours active |
+| Existing weekday alarms | Work prep restored from the mistaken **10:09** to its original **10:12**; work now preserved at **10:14**. Both labels, Monday-Friday recurrence and enabled states verified in the saved Clock list | Repeat the alarm test with work quiet hours active |
 | Alarm protection | Nonzero alarm volume; DND screen states alarms are unaffected; user confirmed the locked-phone DND test alarm sounded clearly | The completed test ran during work hours, so the work-quiet-hours condition remains untested |
 | Discord | Ten categories off: reactions, friend activity, gaming, polls, voice/live activity, forums, events, server messages, other server notifications and stages; **Direct messages** and **Incoming calls** preserved | Confirm wanted DMs/calls arrive; miscellaneous Other and Missed Messages remain mixed or unclear |
 | WhatsApp | **Group notifications**, **Chat history backup** and **Group join requests** turned off in Android settings; **Message notifications** remained enabled | Confirm direct messages and calls arrive, and unwanted group/administrative alerts stay quiet |
@@ -32,7 +32,7 @@ In total, **33 Android notification categories** were disabled with before/after
 
 ### Alarm-time correction
 
-After reviewing the setup, the user confirmed that the original enabled weekday alarms were correct: **work prep at 10:12** and **work now at 10:14**. Changing work prep to 10:09 was a mistake. The public and private policies now preserve the original pair, with `schedule.wake_alarm: null`; no separate alarm is requested. Device restoration to 10:12 is pending readback. The earlier screenshots and sound-test records remain historical evidence.
+After reviewing the setup, the user confirmed that the original enabled weekday alarms were correct: **work prep at 10:12** and **work now at 10:14**. Changing work prep to 10:09 was a mistake. The public and private policies now preserve the original pair, with `schedule.wake_alarm: null`; no separate alarm is requested. Work prep was restored to **10:12** on the phone. The editor confirmed Monday-Friday enabled, Saturday/Sunday disabled and the existing default alarm sound preserved. A fresh saved Clock list verified **work prep at 10:12** and **work now at 10:14**, both enabled Monday-Friday. Only the existing work prep minutes were changed; no additional alarm was created. The earlier screenshots and sound-test records remain historical evidence.
 
 ### Alarm sound test and cleanup
 
