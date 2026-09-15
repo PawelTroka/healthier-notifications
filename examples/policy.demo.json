@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "intent": "SYNTHETIC OFFLINE DEMO — not a device configuration",
+  "apps": [
+    {"package": "org.example.chat", "label": "Demo communicator", "category": "messages", "phone": "preserve", "watch": "allow", "reviewed": true},
+    {"package": "org.example.promotions", "label": "Demo promotions", "category": "noise", "phone": "block", "watch": "block", "reviewed": true}
+  ],
+  "manual_rules": [
+    {"id": "demo.messages", "device": "both", "instruction": "Synthetic example: verify direct messages arrive and unwanted groups do not interrupt."}
+  ]
+}

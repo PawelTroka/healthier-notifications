@@ -1,0 +1,9 @@
+{
+  "package": "com.example.shopping",
+  "label": "Example shopping app — replace with an installed package",
+  "category": "noise",
+  "phone": "block",
+  "watch": "block",
+  "reviewed": true,
+  "note": "Example only. Confirm this app has no direct messages, required delivery calls, security alerts or other needed notifications before blocking the entire app."
+}

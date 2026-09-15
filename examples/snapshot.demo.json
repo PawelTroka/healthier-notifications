@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-15T00:00:00+00:00",
+  "device": {"serial": "SYNTHETIC-NOT-A-REAL-DEVICE", "manufacturer": "Demo", "model": "Offline fixture", "sdk": 36, "android": "16", "fingerprint": "synthetic/offline/fixture", "user": 0, "roles_verified": true},
+  "packages": {
+    "org.example.chat": {"uid": 10001, "system": false, "version_code": "1", "requests_notifications": true, "permission": {"granted": true, "flags": ["USER_SET"]}, "protected": false},
+    "org.example.promotions": {"uid": 10002, "system": false, "version_code": "1", "requests_notifications": true, "permission": {"granted": true, "flags": ["USER_SET"]}, "protected": false}
+  },
+  "warnings": ["Synthetic offline demonstration. No phone has been inspected."]
+}
