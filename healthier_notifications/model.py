@@ -25,6 +25,8 @@ def digest(value):
 def validate_policy(policy):
     if not isinstance(policy, dict) or policy.get("schema_version") != 1:
         raise PolicyError("Policy must be a JSON object with schema_version 1.")
+    if "local_only" in policy and type(policy["local_only"]) is not bool:
+        raise PolicyError("local_only must be true or false when present.")
     if not isinstance(policy.get("apps"), list) or not isinstance(policy.get("manual_rules"), list):
         raise PolicyError("Policy requires apps and manual_rules arrays.")
     days = policy.get("manual_review_days", 30)

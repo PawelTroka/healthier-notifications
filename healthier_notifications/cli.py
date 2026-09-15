@@ -313,6 +313,8 @@ def main(argv=None):
             restore_transaction(device_for(args), args.transaction, local, args.yes)
             return 0
         policy = validate_policy(read_json(args.policy))
+        if args.command == "status" and args.export and policy.get("local_only", False):
+            raise PolicyError("This policy is marked local_only. Run status without --export to keep the report local, or select the reviewed public config/policy.json for export.")
         if args.command == "validate":
             print(f"Policy valid: {len(policy['apps'])} app rule(s), {len(manual_rules(policy))} manual check(s).")
             if not policy["apps"]:
@@ -326,7 +328,10 @@ def main(argv=None):
             if args.channel and not args.package:
                 raise PolicyError("--channel requires --package.")
             device_for(args).open_settings(args.package, args.channel)
-            print("Settings opened on phone. Changes made there require a fresh scan/manual check.")
+            target = f"notification settings for {args.package}" if args.package else "notification settings"
+            if args.channel:
+                target += f", channel {args.channel!r}"
+            print(f"Requested {target}. Confirm the displayed page, app and category before making changes. Changes made there require a fresh scan/manual check.")
             return 0
         if args.command == "attest":
             rules = {r["id"]: r for r in manual_rules(policy)}
@@ -355,13 +360,14 @@ def main(argv=None):
                 print(f"Note: {warning}")
             if args.command == "init":
                 draft = json.loads(json.dumps(policy))
+                draft["local_only"] = True
                 existing = {a["package"] for a in draft["apps"]}
                 for pkg, app in sorted(snapshot["packages"].items()):
                     if app.get("system") is False and pkg not in existing:
                         draft["apps"].append({"package": pkg, "label": pkg, "category": "other", "phone": "preserve", "watch": "review", "reviewed": False, "note": "Identify this app. For communicators, keep DMs and calls; filter groups/reactions/promotions inside the app. Choose watch forwarding explicitly."})
                 draft_path = local / "policy.draft.json"
                 write_json(draft_path, draft)
-                print(f"Inventory draft: {draft_path}\nReview apps and merge chosen rules into {args.policy}. Existing policy was not modified.")
+                print(f"Private inventory draft: {draft_path}\nReview with --policy {draft_path}. Publish only deliberately selected app rules. Existing policy was not modified.")
             return 0
         if args.command in {"plan", "apply"}:
             plan = build_plan(policy, snapshot)
@@ -371,7 +377,7 @@ def main(argv=None):
                 path = apply_plan(device, policy, snapshot, local)
                 if path:
                     capture(device, local, [a["package"] for a in policy["apps"]])
-                    print("Run status --export after completing the manual checks.")
+                    print("Run status after completing the manual checks. Export is available for reviewed public policies only.")
                 else:
                     print("No permission changes were needed. Manual checks remain separate.")
             else:

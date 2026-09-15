@@ -22,6 +22,7 @@ PROTECTED_PACKAGES = frozenset({
     "com.android.phone", "com.android.server.telecom", "com.android.dialer",
     "com.android.mms", "com.android.messaging", "com.android.providers.telephony",
     "com.android.deskclock", "com.android.alarmclock",
+    "com.coloros.alarmclock", "com.northcube.sleepcycle",
     "com.android.cellbroadcastreceiver", "com.android.cellbroadcastservice",
     "com.google.android.dialer", "com.google.android.apps.messaging",
     "com.google.android.deskclock", "com.google.android.cellbroadcastreceiver",
@@ -350,7 +351,10 @@ class AdbDevice:
             extras = ["--es", "android.provider.extra.APP_PACKAGE", package,
                       "--es", "android.provider.extra.CHANNEL_ID", channel]
         try:
-            return self._shell("am", "start", "--user", str(self._user()), "-a", action, *extras)
+            # NEW_TASK | CLEAR_TASK prevents an old app/channel page from staying
+            # visible when the settings activity handles another notification intent.
+            return self._shell("am", "start", "--user", str(self._user()),
+                               "-f", "0x10008000", "-a", action, *extras)
         except DeviceError as exc:
             raise DeviceError(
                 f"Could not open this Android settings page: {exc} "

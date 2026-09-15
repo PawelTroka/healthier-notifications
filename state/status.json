@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-15T15:43:30+00:00",
+  "observed_at": "2026-09-15T15:42:23.143831+00:00",
+  "policy_hash": "7aabe459a755ec2ad2542cff4539a1c1f6824780e0c29e6df267eb580b839453",
+  "device": {
+    "manufacturer": "OPPO",
+    "model": "CPH2841",
+    "android": "16",
+    "sdk": 36
+  },
+  "observation_fresh": true,
+  "status": "needs-review",
+  "scope": "Android notification permission plus explicitly self-reported manual checks. No live Garmin telemetry or continuous synchronization.",
+  "unclassified_third_party_apps": 197,
+  "app_reviews_pending": 0,
+  "manual_checks_pending": 9,
+  "permission_changes": 0,
+  "permission_blockers": 0,
+  "apps": [],
+  "manual_checks": [
+    {
+      "id": "phone.messages",
+      "device": "phone",
+      "instruction": "Across all communicator apps you use, retain person-to-person direct messages and calls. Disable reactions, stories, recommendations, groups and broadcasts where separable. Keep group exceptions only when explicitly selected. Record installed communicator apps in the policy. Personal messages are not limited to work hours.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "phone.work",
+      "device": "phone",
+      "instruction": "Allow actionable work notifications Monday-Friday 10:14-18:14 Europe/Warsaw. If using Teams, keep direct chats and personal mentions, block mobile messages while active on desktop, and set quiet hours 18:14-10:14 plus Saturday/Sunday. These hours apply to work notifications only: clock alarms must still sound before 10:14. Verify support for these exact minutes and timezone; do not silently round. Confirm any agreed on-call route still works.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "phone.presentation",
+      "device": "phone",
+      "instruction": "Make ordinary email and administration silent where wanted. Remove unnecessary banners, lock-screen notifications and badges. Preserve deliberate alarms, reminders, security and emergency notifications.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "phone.sleep",
+      "device": "phone",
+      "instruction": "Choose sleep hours and configure native Do Not Disturb with alarms allowed and desired favourite/repeated-caller exceptions. Preserve alarm volume and countdown timers. The weekday 10:09 wake-up alarm must sound even while sleep/Do Not Disturb or work quiet hours are active. Keep daytime incoming calls, including unknown numbers, reachable.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "watch.allowlist",
+      "device": "watch",
+      "instruction": "In Garmin Connect, review the complete App Notifications list. Allow only chosen messaging, actionable work and useful reminder apps; explicitly exclude unwanted apps. Add app choices to the policy; phone silence alone is not a watch filter.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "watch.alerts",
+      "device": "watch",
+      "instruction": "Verify the actual watch model and firmware. Keep desired Calls/Texts/Apps delivery; use subtle vibration if preferred. Disable unwanted goal/stress/rest/summary/move and connection alerts individually. Preserve safety, abnormal-heart-rate alerts you rely on, and inReach/Messenger.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "watch.sleep",
+      "device": "watch",
+      "instruction": "Configure watch Sleep Focus separately and test it. Preserve deliberately configured watch alarms and verify their alert behavior while Sleep Focus is active. Verify chosen overnight call exceptions on the watch; do not assume phone Do Not Disturb or exceptions sync to Garmin.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "test.wake_alarm",
+      "device": "both",
+      "instruction": "Configure and verify a recurring clock wake-up alarm Monday-Friday at 10:09 Europe/Warsaw, giving 5 minutes to be at the desk by 10:14. Identify the actual clock app; keep its permission preserved and classify any third-party alarm app as reminders, never noise/admin. Keep other deliberately configured clock alarms intact. Check enabled weekdays, local timezone, alarm sound and usable alarm volume. Use a short test alarm with the phone locked, Do Not Disturb/sleep enabled, work quiet hours active and the Garmin disconnected: the phone must still wake you. If using a native watch alarm too, test it separately during Sleep Focus. Do not rely on notification mirroring as proof of alarm delivery. Remove only the temporary test alarm afterward, leaving the recurring 10:09 alarm enabled.",
+      "status": "unverified",
+      "checked_at": null
+    },
+    {
+      "id": "test.delivery",
+      "device": "both",
+      "instruction": "With phone locked, test an ordinary call, personal message, work message away from desktop, desktop-active work suppression, a useful reminder, a muted group, and a favourite call during sleep. Repeat without wearing/connecting the watch to check phone fallback. Verify safety settings without triggering SOS.",
+      "status": "unverified",
+      "checked_at": null
+    }
+  ]
+}

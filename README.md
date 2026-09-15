@@ -34,9 +34,13 @@ This repo includes the maintainer's policy. Review it before using it on another
 | Actionable work | Monday–Friday, **10:14–18:14**, Europe/Warsaw |
 | Clock alarms | Preserve during quiet hours and sleep/DND; weekday wake-up at **10:09** |
 | Deliberate reminders and safety/security alerts | Preserve |
-| Groups, promotions, reactions and other noise | Review and filter at the source |
+| Groups, promotions, reactions and other noise | Disable at the source where separable; record remaining mixed categories |
 
-Sleep hours remain a setup choice. App rules start empty because the installed apps are not yet known. The first connected run creates an inventory and a draft for review. **Physical device verification is still pending; the commands have not configured a phone or watch.**
+The private profile records confirmed sleep choices. The public template leaves sleep hours unset and app rules empty; the installed-app inventory and personal profile stay in ignored `.local/` files. The first connected session on **2026-09-15** inspected an OPPO Find X9 Ultra (CPH2841), Android 16. The weekday preparation alarm was saved at **10:09**, enabled Monday–Friday with the default alarm sound; the enabled 10:14 reminder was preserved. **A test alarm sounded clearly with the phone locked, DND active and Bluetooth off.** The temporary alarm was removed and Bluetooth/DND restored. The user also confirmed one incoming alert reached both phone and watch. The stricter alarm test during work quiet hours and broader notification tests remain pending.
+
+Garmin Connect identified **fenix 9 Pro - inReach, 51mm**, firmware **6.38**. The forwarding list was saved with 19 selected entries, and **Follow Do Not Disturb Behavior** was enabled. Native calls/texts/apps vibration was on; goal alerts and morning/evening reports were turned off. The watch sleep schedule now matches the confirmed private phone schedule, including Saturday's extension. Sleep Focus notifications stayed on, manual system DND stayed off, and a requested sync was followed by a Connected device status. A single incoming alert reached both devices; delivery from every app and focus behavior still need testing. See the [connected-session report](docs/hardware-session.md) for the configuration and remaining checks.
+
+Teams and the selected Outlook work account have quiet hours **18:14–10:14**, plus all-day Saturday/Sunday quiet. Personal Outlook settings were preserved. Source filters were configured for selected messaging apps; Outlook calendar reminders use separate controls.
 
 ## What can be synchronized
 
@@ -81,9 +85,9 @@ python -m healthier_notifications validate
 python -m healthier_notifications init
 ```
 
-The inventory is saved to `.local/latest.json`. New apps in `.local/policy.draft.json` start with `phone: "preserve"`, `watch: "review"`, and `reviewed: false`. Existing app choices are retained in the draft. `init` does not edit the main policy or change the phone.
+The inventory is saved to `.local/latest.json`. New apps in `.local/policy.draft.json` start with `phone: "preserve"`, `watch: "review"`, and `reviewed: false`. Existing app choices are retained in the draft. Drafts have `local_only: true`, which prevents exporting their app list to tracked `state/` files. `init` does not edit the main policy or change the phone.
 
-Review the draft and merge it into `config/policy.json`. The draft contains third-party apps; consult the full inventory for preinstalled messaging/calendar apps and add their watch choices manually. Match an unfamiliar package to its phone settings page:
+Review the draft as a private policy, for example by saving a working copy as `.local/policy.personal.json`. Keep `local_only: true` in that copy. The draft contains third-party apps; consult the full inventory for preinstalled messaging/calendar apps and add their watch choices manually. Match an unfamiliar package to its phone settings page:
 
 ```powershell
 python -m healthier_notifications open-settings --package com.microsoft.teams
@@ -94,6 +98,19 @@ This only opens a settings screen. It works for an installed package whose setti
 Use `category: "messages"` for your personal communicator apps and `"work"` for dedicated work apps. Keep `phone: "preserve"` while filtering their unwanted notifications using the [device guide](docs/device-guide.md). Mark the rule reviewed when identified and choose `watch: "allow"` or `"block"`. For communicators carrying both work and personal conversations, use account/conversation controls so work quiet hours do not silence personal messages.
 
 Only select `phone: "block"` for an app whose **entire ordinary notification stream** you want off. The tool restricts that action to reviewed `noise` or `admin` apps. Use manual silent/category settings for an app that still has useful notifications. `phone: "allow"` can restore a supported app's denied notification permission; it does not enable its channels, bypass quiet time, or configure Garmin.
+
+For a private profile, put `--policy` before every command that uses its choices:
+
+```powershell
+python -m healthier_notifications --policy .local/policy.personal.json validate
+python -m healthier_notifications --policy .local/policy.personal.json plan
+python -m healthier_notifications --policy .local/policy.personal.json checks
+python -m healthier_notifications --policy .local/policy.personal.json status > .local/status.personal.md
+```
+
+Use the same option for `apply` and `attest`. Status without `--export` prints a report; the example redirects it into an ignored local file. A status needing review returns exit code 2 and still produces the report. Manual checks are tied to the selected policy's hash, so a private-profile check does not establish a pass for a different public policy.
+
+Only copy app rules into `config/policy.json` when you intend to publish those names and choices. To publish an inventory-derived policy, first remove private app rules and custom instructions, review the result, and then deliberately remove `local_only` or set it to `false`. The flag prevents CLI export; it does not prevent manually adding a private file to Git.
 
 ### 3. Preview, then apply the reviewed permission rules
 
@@ -117,7 +134,7 @@ Without `--user`, the current Android user is selected. A work profile is a sepa
 
 Follow [the phone/watch guide](docs/device-guide.md). It covers communicator categories, Teams duplicates/quiet time, Garmin allowlisting, native watch alerts and realistic delivery tests. The selected work hours are recorded in the repo; this version applies the schedule through guided in-app setup.
 
-The **10:09 weekday wake-up alarm is a required setup check**, even though work notifications stay quiet until 10:14. Configure it in the actual Clock app and complete `test.wake_alarm`. The repo records the desired time; no alarm has been set on the phone yet. Keep clock app rules as `phone: "preserve"`; use category `reminders` for any third-party alarm app.
+The **10:09 weekday wake-up alarm is a required setup check**, even though work notifications stay quiet until 10:14. Configure it in the actual Clock app and complete `test.wake_alarm`. Its enabled weekday configuration was read back and a locked-phone DND sound test passed with Bluetooth off. That test ran during work hours; the full check still requires testing while work quiet hours are active. Keep clock app rules as `phone: "preserve"`; use category `reminders` for any third-party alarm app.
 
 ```powershell
 python -m healthier_notifications checks
@@ -140,7 +157,7 @@ git diff -- config state
 git status --short
 ```
 
-`state/status.json` and `state/status.md` summarize the observation time, Android permission differences, app classification still needed, and manual check results. `needs-review` is expected until setup and tests are complete. New files appear in `git status`; inspect them before adding them to Git.
+`state/status.json` and `state/status.md` summarize the observation time, Android permission differences, app classification still needed, and manual check results. They include every app rule and manual instruction in the selected policy. `local_only` policies cannot use `--export`; select the reviewed public policy for a shared summary. With empty public app rules, the export contains app-review counts but no installed-app names, and does not describe the private profile's progress. `needs-review` is expected until setup and tests are complete. New files appear in `git status`; inspect them before adding them to Git.
 
 For each later reconciliation: connect → `plan` → apply wanted permission changes → recheck affected manual settings → `status --export`. If you prefer a change you made on a device, update the desired policy first instead of applying the old policy back to it. This is explicit reconciliation whenever you run the commands, not continuous or automatic two-way device synchronization.
 
@@ -156,7 +173,7 @@ For each later reconciliation: connect → `plan` → apply wanted permission ch
   "phone": "preserve",
   "watch": "allow",
   "reviewed": true,
-  "note": "Keep direct messages and calls; configure noisy groups inside the app."
+  "note": "Keep direct messages and calls; disable groups inside the app unless explicitly selected."
 }
 ```
 
@@ -202,14 +219,15 @@ PowerShell shorthand: `./notifications.ps1 plan` runs the same CLI from any dire
 | `state/status.json`, `state/status.md` | Curated observation and manual-check summary | Yes, after review |
 | `.local/latest.json` | Complete installed package metadata and selected permission states | Ignored; contains device serial and app inventory |
 | `.local/policy.draft.json` | Private inventory-derived policy draft | Ignored until intentionally merged |
+| `.local/policy.personal.json`, `.local/status.personal.md` | Private app choices and local report | Ignored; keep `local_only: true` in the policy |
 | `.local/manual-checks.json` | Dated manual observations and free-text notes | Ignored |
 | `.local/transactions/` | Write-ahead rollback journals | Ignored; retain locally for recovery |
 | `.tools/` | Local portable ADB installation (install for a fresh clone) | Ignored |
 
-The program reads package metadata, role holders and notification permission state. It does not collect notification bodies, conversations or contact lists, install an on-phone agent, or use a cloud notification classifier. Exported status omits serials, build fingerprints, the full inventory and free-text attestation notes; it includes managed app choices and manual instructions already in policy. Keep custom `--local-dir` locations private too.
+The program reads package metadata, role holders and notification permission state. It does not collect notification bodies, conversations or contact lists, install an on-phone agent, or use a cloud notification classifier. Exported status omits serials, build fingerprints, unconfigured inventory entries and free-text attestation notes; it includes every configured app's package, label, permission observation and watch choice, plus manual instructions from policy. An inventory-derived policy can therefore expose an app list unless kept private. `local_only: true` rejects export before observing the phone or printing the report. Keep custom `--local-dir` locations private too.
 
 ## Validation limits
 
-The **80 mocked tests** exercise parsing, device selection, permission controls, blocked writes, partial failures, rollback and status reporting. GitHub Actions runs them on Windows and Linux with Python 3.10 and 3.14. Physical OPPO/Garmin behavior is **not yet tested**. ColorOS may reject commands or expose different permission output; unknown state stops automated changes. Calls/media can have Android notification-permission exemptions, and individual channels, app settings, connectivity and watch focus modes can still affect delivery.
+The mocked tests exercise parsing, device selection, permission controls, blocked writes, partial failures, rollback, private-profile export refusal and status reporting. GitHub Actions runs them on Windows and Linux with Python 3.10 and 3.14. Live OPPO inventory, selected phone/watch configuration readbacks, the locked-phone DND alarm sound test and one user-confirmed incoming alert on both devices completed. Automated permission changes, alarm delivery during work quiet hours and the broader notification tests are **not yet verified on hardware**. ColorOS may reject commands or expose different permission output; unknown state stops automated changes. Calls/media can have Android notification-permission exemptions, and individual channels, app settings, connectivity and watch focus modes can still affect delivery.
 
 See [sources and capability boundaries](docs/sources.md) for official Android, OPPO, Garmin and Microsoft references. Start a connected session with `init`; then use real delivery tests before relying on the setup.

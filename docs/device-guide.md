@@ -4,7 +4,7 @@ Use the repository to describe the interruptions you want, apply the small part 
 
 ## Confirm the devices first
 
-The referenced conversation reports an **OPPO Find X9 Ultra** and a **Garmin Fenix 9 Pro inReach, 52 mm**. These are reported details, not an inventory from connected hardware. OPPO publishes Find X9 Ultra specifications with ColorOS 16. Garmin publishes fēnix 9 Pro models with inReach, and lists the large case as **51 mm**. Record the actual phone model, Android version, watch variant, firmware, and Garmin Connect version when setting up. Regional software and later updates can change menu labels. [OPPO specifications](https://www.oppo.com/in/smartphones/series-find-x/find-x9-ultra/specs/), [Garmin product family](https://www.garmin.com/en-GB/p/2021175/pn/010-04763-01/).
+The first connected session on 2026-09-15 identified an **OPPO Find X9 Ultra (CPH2841), Android 16**. Garmin Connect identified **fenix 9 Pro - inReach, 51mm**, with firmware **6.38** read from About. The watch reconnected after Bluetooth was restored following the alarm test, allowing native settings inspection. This observed label resolves the earlier conversation's reported 52 mm size. OPPO publishes Find X9 Ultra specifications with ColorOS 16, and Garmin lists the large fēnix 9 Pro case as 51 mm. Record firmware and Garmin Connect version when setting up. Regional software and later updates can change menu labels. See the [session report](hardware-session.md) for device observations. [OPPO specifications](https://www.oppo.com/in/smartphones/series-find-x/find-x9-ultra/specs/), [Garmin product family](https://www.garmin.com/en-GB/p/2021175/pn/010-04763-01/).
 
 Connect the unlocked phone by USB, enable USB debugging, and accept the computer's debugging key on the phone. `adb devices -l` should show the intended device as `device`; `unauthorized` needs the on-phone prompt. Select the intended serial explicitly when more than one device is connected. [Android ADB instructions](https://developer.android.com/tools/adb).
 
@@ -34,7 +34,7 @@ For apps you still need, open their notification settings and review their categ
 
 The automated backend is deliberately narrow: on supported Android versions, reviewed non-system package rules can grant or revoke `android.permission.POST_NOTIFICATIONS`. It does not clear permission flags, change channel importance, set conversation priorities, rewrite DND schedules, or modify private app settings. A grant does not prove the app's individual channels are enabled or that Garmin will mirror them. A revoke is a whole-app decision, so use manual category controls when you want some notifications from that app.
 
-The work window is **Monday-Friday, 10:14-18:14, Europe/Warsaw**, as requested. Preserve those exact minute values. Personal direct messages from all communicator apps remain separate from this work schedule. No sleep schedule has been chosen. Before using phone-wide DND, review wanted exceptions so a work quiet period does not accidentally silence personal direct messages. Verify an ordinary alarm and a wanted call with the chosen settings. Phone DND, silent channels, Teams quiet time, and watch focus settings are separate controls.
+The work window is **Monday-Friday, 10:14-18:14, Europe/Warsaw**, as requested. Preserve those exact minute values. Personal direct messages from all communicator apps remain separate from this work schedule. Confirmed sleep choices are recorded in the private profile; the public template leaves sleep hours unset. Before using phone-wide DND, review wanted exceptions so a work quiet period does not accidentally silence personal direct messages. Verify an ordinary alarm and a wanted call with the chosen settings. Phone DND, silent channels, Teams quiet time, and watch focus settings are separate controls.
 
 ## Wake-up alarm: 10:09 on weekdays
 
@@ -46,13 +46,33 @@ Create a short test alarm while the phone is locked, DND/sleep is active, work n
 
 Remove the temporary test alarm afterward and leave the weekday 10:09 alarm enabled. Record `test.wake_alarm` as passed only after the recurring configuration and practical test are verified. The repository stores this desired alarm; its commands do not create the real device alarm automatically. Recheck the intended Warsaw time when travelling.
 
+In the connected session, the user confirmed a test alarm sounded clearly with secure keyguard locked, DND active and Bluetooth off. The test alarm was removed, the recurring alarms preserved, and Bluetooth/DND restored. Because the test occurred during the work window, the stricter `test.wake_alarm` requirement for active work quiet hours remains pending.
+
+## Personal communicators: keep direct messages
+
+The connected session used each app's available controls. These labels are observations from the installed versions; verify the displayed app and category before changing a switch.
+
+- **WhatsApp:** Android notification settings kept **Message notifications** enabled and disabled **Group notifications**, **Chat history backup** and **Group join requests**. Check calls separately; changing group or administrative categories does not test call delivery.
+- **Telegram:** in-app notification settings kept **Private Chats** enabled and preserved call ringtone/vibration settings. Global **Groups**, **Channels**, **Reactions** and **Stories**, plus **Contact joined Telegram** and **Pinned Messages**, were off after setup; repeat notifications were set to **Never**. All Groups and Channels notification exceptions were removed and their absence read back. Recheck for new conversation overrides when reviewing the policy; the global switch alone does not establish that no exceptions exist.
+- **Discord:** Android categories kept **Direct messages** and **Incoming calls** enabled while ten activity/server categories were disabled. The disabled **Messages** category was under **Server**, separate from direct messages. Miscellaneous Other and Missed Messages remain enabled and need review.
+- **Instagram and LinkedIn:** selected social, promotional, news and event categories were disabled while their message/call categories remained enabled. Some categories combine wanted and unwanted activity, so these apps still need in-app review before claiming direct-message-only behavior.
+- **Meetup:** the inspected Android screen exposed no dedicated message category. Its mixed Other notifications category remained enabled; continue filtering inside the app.
+
+Keep personal communication outside the work schedule. Test a wanted direct message and a suppressed group or broadcast on both devices. An enabled app in Garmin Connect forwards from that app; its selection does not establish which conversation types reach the watch. See the [session report](hardware-session.md) for the dated configuration and remaining checks.
+
 ## Teams: reduce duplicate and out-of-hours alerts
 
-In Teams mobile, open your profile picture, then **Notifications**. Under the blocking options, enable **When active on other devices** if you want messages to stop interrupting the phone while you use Teams on desktop or the web. Microsoft says mobile notifications resume after several minutes of inactivity; **calls can still notify the phone while desktop is active**. Review in-meeting and in-app notifications separately. [Teams mobile notification help](https://support.microsoft.com/en-us/teams/notifications-settings/troubleshoot-notifications-in-microsoft-teams-mobile-apps).
+In Teams mobile, open your profile picture, then **Notifications**. Under the blocking options, enable **When active on other devices** if you want messages to stop interrupting the phone while you use Teams on desktop or the web. Microsoft says mobile notifications resume after several minutes of inactivity. Its statement that calls still notify mobile appears in the iOS section; **test calls separately on the installed Android app while desktop is active**. Review in-meeting and in-app notifications separately. [Teams mobile notification help](https://support.microsoft.com/en-us/teams/notifications-settings/troubleshoot-notifications-in-microsoft-teams-mobile-apps).
 
 Use **Block during quiet hours** to quiet work notifications outside **Monday-Friday, 10:14-18:14 Europe/Warsaw**: the intended weekday quiet interval is 18:14 through 10:14 the next morning, with Saturday and Sunday quiet all day. Check how the installed app handles overnight ranges and day boundaries. If a time picker cannot represent 10:14 or 18:14, record the limitation for manual review and an explicit choice of approximation; do not silently round. Teams bases quiet hours on device time, so retest after travel and verify that the intended Warsaw work boundary still holds. [Teams quiet time](https://support.microsoft.com/en-us/teams/platform/quiet-time-in-microsoft-teams-for-mobile-devices).
 
-The optional **Set on Teams and Outlook** setting synchronizes schedules across those mobile apps on the same account and shares the schedule with Viva Insights. Microsoft says enabling that schedule synchronization cannot be reversed; decide separately whether you want it. Repository status export does not require this option. [Teams quiet time](https://support.microsoft.com/en-us/teams/platform/quiet-time-in-microsoft-teams-for-mobile-devices).
+The optional **Set on Teams and Outlook** setting synchronizes schedules across those mobile apps on the same account and shares the schedule with Viva Insights. Microsoft's Teams page warns that the initial synchronization cannot be reversed; its Outlook page describes turning the toggle off to stop subsequent cross-app updates. Existing schedules can be replaced when enabling it. The connected setup kept it off in both apps. Repository status export does not require this option. [Teams quiet time](https://support.microsoft.com/en-us/teams/platform/quiet-time-in-microsoft-teams-for-mobile-devices), [Outlook quiet time](https://support.microsoft.com/en-us/outlook/how-can-i-learn-more-about-using-quiet-time-across-devices-with-outlook-mobile).
+
+## Outlook: scope quiet time to the work account
+
+Select the actual work account before changing Outlook's quiet-time settings. In the connected session, the **Microsoft 365 work account** received daily **18:14–10:14** quiet hours and all-day quiet on Saturday and Sunday. Both schedule switches were enabled and the exact times read back. The personal Outlook.com account was left unchanged, and **Focused Inbox only** mail notifications were preserved.
+
+**Set on Teams and Outlook** remained off. The same intended work boundary was configured separately in each app, so a later change must be checked in both. Test work mail at the weekday boundaries and during a weekend, including what reaches the watch. Microsoft says Outlook calendar notifications continue during quiet time while mail notifications are muted; review desired calendar reminders separately. [Outlook quiet time](https://support.microsoft.com/en-us/outlook/how-can-i-learn-more-about-using-quiet-time-across-devices-with-outlook-mobile).
 
 ## Garmin: filter mirrored apps separately
 
@@ -60,7 +80,9 @@ In Garmin Connect on Android, use **More/menu > Settings > Notifications > App N
 
 The same manual places phone notification controls at **Watch Settings > Connectivity > Phone > Notifications**. Review calls, texts, apps, privacy, and timeout there. Sleep and activity notification behavior belongs to **Focus Modes**; changes made with a focus mode active apply to that mode. Check normal use, sleep, and activities separately. [Phone notification controls](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-043F879B-FC35-4B22-A025-DF91C157B13F.html), [Focus Modes](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-DF71C212-09EF-431B-87E9-40DEBD0C41A6.html).
 
-If the installed Garmin Connect app offers **Follow Do Not Disturb Behavior**, inspect and test it before recording it as working. A current primary Garmin support document confirming this option's behavior was not found in this review. Do not assume it synchronizes the watch's DND state, its native alerts, or silent Android channels. Record whether the option exists and test an allowed notification with phone DND both on and off.
+The connected session aligned all seven watch sleep days with the confirmed private phone schedule, including the Saturday extension. Sleep Focus Smart Notifications remained on, normal calls/texts/apps vibration remained enabled, and manual system DND remained off. A sync was requested and the device list showed Connected afterward. These settings still require actual notification and Sleep Focus tests.
+
+The installed Garmin Connect app exposed **Follow Do Not Disturb Behavior**; it was enabled and read back during the connected session. The App Notifications list was also changed from all applications to 19 selected entries and checked through the complete list. The user separately confirmed one incoming alert reached both devices, with the app and alert type unspecified. The broader delivery and mode checks remain pending. A current primary Garmin support document confirming the DND option's exact behavior was not found in this review. Do not assume it synchronizes the watch's DND state, its native alerts, or silent Android channels. Test an allowed notification with phone DND both on and off.
 
 ### Watch-native alerts
 
@@ -74,12 +96,12 @@ Keep Garmin Connect and Garmin Messenger operational while tuning notifications.
 
 The intended workflow is:
 
-1. Review `config/policy.json`: desired app rules and manual settings belong here.
+1. Review the selected policy: use `config/policy.json` for public choices, or a `local_only: true` policy in `.local/` for private app rules. Use the same `--policy PATH` option before each command.
 2. Connect the phone and run `scan`, then `plan`. Read the proposed package changes.
 3. Run `apply --yes` when the proposed changes match your choices. Save the transaction reference; `restore TRANSACTION --yes` restores the permission state recorded for that transaction, subject to the command's checks.
 4. Complete the manual phone, app, and watch settings above. Run the practical checks below.
 5. Record each manual rule with `attest RULE_ID --result pass` or `fail`; `--note` can record the device/firmware context and what you observed. Avoid private message contents, contact names, or account details.
-6. Run `status --export` to refresh `state/status.json` and `state/status.md`, and review the diff before committing. These summaries omit device serials and app inventory.
+6. For a private policy, run `status` without `--export` and keep its output local. To refresh shared `state/status.json` and `state/status.md`, select the reviewed public policy and run `status --export`; review the diff before committing. These summaries omit device serials and unconfigured inventory entries, but include all app names and manual instructions in the selected policy. Export is refused for a `local_only` policy.
 
 An attestation is a dated human observation. It is not a live readback from Garmin, Teams, or ColorOS. A scan checks only the Android permission state supported by this tool. The repository does not automatically discover every manual change or continuously synchronize a disconnected device. Reconnect and scan to discover measured drift; recheck manual settings and renew their attestations when they change. Keep the desired policy distinct from both measured state and manual observations.
 

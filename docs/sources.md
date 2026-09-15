@@ -38,7 +38,7 @@ ColorOS category names, DND exceptions, badge controls, and background-operation
 
 | Source | What it supports |
 | --- | --- |
-| [fēnix 9 product family](https://www.garmin.com/en-GB/p/2021175/pn/010-04763-01/) | fēnix 9/Pro family, optional inReach, and 43/47/51 mm case sizes. Keep the conversation's reported 52 mm detail unconfirmed. |
+| [fēnix 9 product family](https://www.garmin.com/en-GB/p/2021175/pn/010-04763-01/) | fēnix 9/Pro family, optional inReach, and 43/47/51 mm case sizes. The connected Garmin Connect label was fenix 9 Pro - inReach, 51mm; see the separate [session observation](hardware-session.md). |
 | [fēnix 9: Enabling Phone Notifications](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-043F879B-FC35-4B22-A025-DF91C157B13F.html) | Watch call/text/app alert controls, Android Garmin Connect app selection, blocked-app list, privacy and timeout. |
 | [Garmin: Which notifications display?](https://support.garmin.com/en-IN/?faq=TLeDN92ZU0AgN4df6HakwA&identifier=780196&tab=topics) | General Android route: Garmin Connect > More > Settings > Notifications > App Notifications. Model-specific controls may differ. |
 | [fēnix 9: Focus Modes](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-DF71C212-09EF-431B-87E9-40DEBD0C41A6.html) | Focus-specific settings for situations including sleep and activities. |
@@ -49,13 +49,18 @@ ColorOS category names, DND exceptions, badge controls, and background-operation
 
 No supported Garmin CLI or public API for reading/writing this personal watch's notification allowlist, native alerts, and focus settings was established in this review. The current project therefore records those settings as manual attestations. This is a project capability boundary, not proof that no other implementation is possible.
 
-An installed app may expose **Follow Do Not Disturb Behavior**. This review did not find a primary Garmin support document establishing the current toggle's exact semantics. Inspect its presence and verify behavior on the actual phone, app version, and watch firmware. Do not claim automatic bidirectional DND synchronization or infer silent-channel behavior from the name.
+The installed app exposed **Follow Do Not Disturb Behavior**, and the connected session enabled it. This review did not find a primary Garmin support document establishing the current toggle's exact semantics. Verify behavior on the actual phone, app version, and watch firmware. Do not claim automatic bidirectional DND synchronization or infer silent-channel behavior from the name.
 
-## Microsoft Teams
+## Microsoft Teams and Outlook
 
 | Source | What it supports |
 | --- | --- |
-| [Troubleshoot notifications in Teams mobile apps](https://support.microsoft.com/en-us/teams/notifications-settings/troubleshoot-notifications-in-microsoft-teams-mobile-apps) | Suppression while active on desktop/web, return after inactivity, separate meeting/in-app controls, and the exception that calls still notify mobile. |
-| [Quiet time in Teams mobile](https://support.microsoft.com/en-us/teams/platform/quiet-time-in-microsoft-teams-for-mobile-devices) | Per-hour/day schedule, device-local time zones, optional Teams/Outlook schedule synchronization and Viva Insights sharing. Microsoft describes enabling that synchronization as irreversible. |
+| [Troubleshoot notifications in Teams mobile apps](https://support.microsoft.com/en-us/teams/notifications-settings/troubleshoot-notifications-in-microsoft-teams-mobile-apps) | Suppression while active on desktop/web, return after inactivity, and separate meeting/in-app controls. The call-notification exception appears in the iOS section; verify Android call behavior on the installed app. |
+| [Quiet time in Teams mobile](https://support.microsoft.com/en-us/teams/platform/quiet-time-in-microsoft-teams-for-mobile-devices) | Per-hour/day schedule, device-local time zones, optional Teams/Outlook schedule synchronization and Viva Insights sharing. The page warns that the initial synchronization cannot be reversed. |
+| [Quiet time across devices with Outlook mobile](https://support.microsoft.com/en-us/outlook/how-can-i-learn-more-about-using-quiet-time-across-devices-with-outlook-mobile) | Work-account settings, replacement of existing schedules when sharing, and turning the toggle off to stop subsequent cross-app changes. Mail is muted during quiet time; calendar notifications continue. |
 
 Teams rules, selected Garmin apps, ColorOS category choices, and quiet schedules are manual in this version. The tool's status report must distinguish measured Android permission state from these dated observations.
+
+## Installed-app observations
+
+The WhatsApp and Telegram controls in the [connected-session report](hardware-session.md) were read from the installed apps' settings on 2026-09-15. WhatsApp used Android notification categories; Telegram used its own global notification controls and displayed per-conversation exception counts. These observations establish the saved configuration on that installation, not a universal menu layout or successful phone/watch delivery. Raw configuration evidence remains private under `.local/ui/`; no message contents are needed for these checks.

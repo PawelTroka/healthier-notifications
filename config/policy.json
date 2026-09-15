@@ -22,7 +22,7 @@
     {
       "id": "phone.messages",
       "device": "phone",
-      "instruction": "Across all communicator apps you use, retain person-to-person direct messages and calls. Disable reactions, stories, recommendations and broadcasts where separable. Mute noisy groups; retain necessary coordination groups. Record installed communicator apps in the policy. Personal messages are not limited to work hours."
+      "instruction": "Across all communicator apps you use, retain person-to-person direct messages and calls. Disable reactions, stories, recommendations, groups and broadcasts where separable. Keep group exceptions only when explicitly selected. Record installed communicator apps in the policy. Personal messages are not limited to work hours."
     },
     {
       "id": "phone.work",

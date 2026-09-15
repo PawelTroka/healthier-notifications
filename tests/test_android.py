@@ -213,6 +213,27 @@ class PermissionAndSettingsTests(unittest.TestCase):
             AdbDevice(user=0).set_permission(PACKAGE, False)
 
     @patch("healthier_notifications.android.subprocess.run")
+    def test_settings_intents_clear_previous_page_for_requested_user(self, run):
+        cases = [
+            (None, None, "android.settings.NOTIFICATION_SETTINGS", []),
+            (PACKAGE, None, "android.settings.APP_NOTIFICATION_SETTINGS",
+             ["--es", "android.provider.extra.APP_PACKAGE", PACKAGE]),
+            (PACKAGE, "direct_messages", "android.settings.CHANNEL_NOTIFICATION_SETTINGS",
+             ["--es", "android.provider.extra.APP_PACKAGE", PACKAGE,
+              "--es", "android.provider.extra.CHANNEL_ID", "direct_messages"]),
+        ]
+        for package, channel, action, extras in cases:
+            with self.subTest(package=package, channel=channel):
+                run.reset_mock()
+                run.side_effect = [completed("List of devices attached\nPHONE\tdevice"),
+                                   completed("Starting: Intent")]
+                self.assertEqual(AdbDevice(user=10).open_settings(package, channel), "Starting: Intent")
+                self.assertEqual(shlex.split(run.call_args.args[0][4]),
+                                 ["am", "start", "--user", "10", "-f", "0x10008000",
+                                  "-a", action, *extras])
+                self.assertEqual(run.call_count, 2)
+
+    @patch("healthier_notifications.android.subprocess.run")
     def test_remote_channel_is_single_quoted_argument(self, run):
         run.side_effect = [completed("List of devices attached\nPHONE\tdevice"), completed("Starting: Intent")]
         channel = "news and 'updates'; $(reboot); `reboot`\nwith newline"
@@ -220,7 +241,7 @@ class PermissionAndSettingsTests(unittest.TestCase):
         argv = run.call_args.args[0]
         self.assertEqual(argv[:4], [r"C:\Android Tools\adb.exe", "-s", "PHONE", "shell"])
         self.assertEqual(len(argv), 5)
-        self.assertEqual(shlex.split(argv[4]), ["am", "start", "--user", "10", "-a",
+        self.assertEqual(shlex.split(argv[4]), ["am", "start", "--user", "10", "-f", "0x10008000", "-a",
             "android.settings.CHANNEL_NOTIFICATION_SETTINGS", "--es", "android.provider.extra.APP_PACKAGE",
             PACKAGE, "--es", "android.provider.extra.CHANNEL_ID", channel])
         self.assertFalse(run.call_args.kwargs["shell"])

@@ -471,6 +471,22 @@ class RestoreTests(TemporaryWorkflowCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_local_only_accepts_booleans_or_absence(self):
+        policy = policy_for(FIRST)
+        self.assertNotIn("local_only", validate_policy(policy))
+        for value in (True, False):
+            with self.subTest(value=value):
+                policy["local_only"] = value
+                self.assertIs(validate_policy(policy)["local_only"], value)
+
+    def test_local_only_rejects_non_booleans(self):
+        for value in (None, 0, 1, "true", "false", "", [], [True], {}):
+            with self.subTest(value=value):
+                policy = policy_for(FIRST)
+                policy["local_only"] = value
+                with self.assertRaisesRegex(PolicyError, "local_only must be true or false"):
+                    validate_policy(policy)
+
     def test_user_work_schedule_is_accepted_without_rounding(self):
         policy = validate_policy(policy_for(FIRST))
         self.assertEqual(policy["schedule"]["work_hours"]["start"], "10:14")
@@ -658,6 +674,51 @@ class MainTests(TemporaryWorkflowCase):
         self.assertIn("unclassified apps: 1", self.output.getvalue())
         self.assertEqual(device.writes, [])
 
+    def test_local_only_export_is_rejected_before_observation_or_output(self):
+        self.policy["local_only"] = True
+        self.policy["apps"][0]["label"] = "PRIVATE APP LABEL"
+        cli.write_json(self.policy_path, self.policy)
+        state = self.root / "state"
+        state.mkdir()
+        for name in ("status.json", "status.md"):
+            (state / name).write_text("Existing public summary", encoding="utf-8")
+        for extra in ([], ["--snapshot", str(self.root / "not-read.json")]):
+            with self.subTest(extra=extra), patch.object(cli, "device_for") as device, \
+                    patch.object(cli, "status_report") as report, patch.object(cli, "ROOT", self.root):
+                result = cli.main(self.args + ["status", "--export"] + extra)
+            self.assertEqual(result, 1)
+            device.assert_not_called()
+            report.assert_not_called()
+            self.assertNotIn("PRIVATE APP LABEL", self.output.getvalue())
+            self.assertIn("local_only", self.output.getvalue())
+            self.assertIn("without --export", self.output.getvalue())
+            for name in ("status.json", "status.md"):
+                self.assertEqual((state / name).read_text(encoding="utf-8"), "Existing public summary")
+        self.assertFalse((self.local / "latest.json").exists())
+
+    def test_local_only_status_without_export_remains_available(self):
+        self.policy["local_only"] = True
+        cli.write_json(self.policy_path, self.policy)
+        device = FakeDevice(snapshot_for(FIRST, granted=False))
+        with patch.object(cli, "device_for", return_value=device), patch.object(cli, "ROOT", self.root):
+            result = cli.main(self.args + ["status"])
+        self.assertEqual(result, 2)
+        self.assertIn(FIRST, self.output.getvalue())
+        self.assertFalse((self.root / "state").exists())
+        self.assertEqual(device.writes, [])
+
+    def test_init_marks_inventory_draft_local_only_without_changing_policy(self):
+        original = self.policy_path.read_bytes()
+        device = FakeDevice(snapshot_for(FIRST, EXTRA))
+        with patch.object(cli, "device_for", return_value=device):
+            result = cli.main(self.args + ["init"])
+        self.assertEqual(result, 0)
+        draft = cli.read_json(self.local / "policy.draft.json")
+        self.assertIs(draft["local_only"], True)
+        self.assertIn(EXTRA, {app["package"] for app in draft["apps"]})
+        self.assertEqual(self.policy_path.read_bytes(), original)
+        self.assertEqual(device.writes, [])
+
     def test_attest_stores_local_evidence_and_export_excludes_its_note(self):
         device = FakeDevice(snapshot_for(FIRST, granted=False))
         latest = self.local / "latest.json"
@@ -686,6 +747,24 @@ class MainTests(TemporaryWorkflowCase):
             result = cli.main(self.args + ["attest", "does-not-exist", "--result", "pass"])
         self.assertEqual(result, 1)
         device.assert_not_called()
+
+    def test_open_settings_reports_requested_target_without_claiming_ui_verification(self):
+        for options, package, channel, target in (
+            ([], None, None, "Requested notification settings."),
+            (["--package", FIRST], FIRST, None, f"Requested notification settings for {FIRST}."),
+            (["--package", FIRST, "--channel", "direct messages"], FIRST, "direct messages",
+             f"Requested notification settings for {FIRST}, channel 'direct messages'."),
+        ):
+            with self.subTest(options=options), patch.object(cli, "device_for") as device:
+                self.output.seek(0)
+                self.output.truncate(0)
+                result = cli.main(self.args + ["open-settings"] + options)
+            self.assertEqual(result, 0)
+            device.return_value.open_settings.assert_called_once_with(package, channel)
+            output = self.output.getvalue()
+            self.assertIn(target, output)
+            self.assertIn("Confirm the displayed page, app and category", output)
+            self.assertNotIn("Settings opened", output)
 
     def test_validate_and_offline_plan_do_not_connect_to_phone(self):
         path = self.root / "snapshot.json"
