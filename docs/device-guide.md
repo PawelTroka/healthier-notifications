@@ -60,6 +60,28 @@ The connected session used each app's available controls. These labels are obser
 
 Keep personal communication outside the work schedule. Test a wanted direct message and a suppressed group or broadcast on both devices. An enabled app in Garmin Connect forwards from that app; its selection does not establish which conversation types reach the watch. See the [session report](hardware-session.md) for the dated configuration and remaining checks.
 
+### Review unwanted notifications that remain
+
+This is guidance for a further settings review, not a record of additional changes applied to the devices.
+
+1. Identify the app and notification type, then inspect the matching Android category and the app's own notification settings. Verify the displayed app and category before changing anything; labels are not channel IDs.
+2. Prefer a specific source control for reactions, recommendations, promotions or routine status updates. Keep direct messages and calls. If one switch combines wanted and unwanted types, record that limitation and inspect the in-app controls before changing it.
+3. Record the previous value, intended value and saved readback privately. Keep settings evidence separate from a later delivery test. Do not copy notification bodies, account identifiers or screenshots into public reports.
+4. Test a new unwanted event and a wanted message on both devices. Recheck conversation exceptions and newly created categories after app updates. A permission scan alone does not measure these controls.
+
+Useful app-level distinctions:
+
+- **WhatsApp reactions:** inspect **Settings > Notifications** for separate **Reaction notifications** controls under messages and groups. Turn off only the reaction controls if present; retain direct-message and call notifications. The readable official guide documents this distinction for iOS; the Android platform page did not render during review, so confirm the installed Android labels and saved values. Disabling Android's broad Message notifications category would also risk suppressing wanted messages. [WhatsApp notification guide](https://faq.whatsapp.com/iphone/troubleshooting/how-to-manage-your-notifications).
+- **Instagram messages:** keep human-sent messages, including reels shared directly in a conversation. Review recommendation, activity and promotional controls separately. The official guide distinguishes Messages, Calls and Live/Reels, but this review did not establish an independent Android DM-reaction switch. Inspect the actual options before claiming that message likes can be removed without affecting DMs. [Instagram category guide](https://www.facebook.com/help/instagram/546541825361643?locale=ru_RU).
+- **LinkedIn:** open **Profile picture > Settings > Notifications > Notifications you receive**, then inspect the individual push options within each category. Remove unwanted feed/network activity while retaining messages and intended connection invitations; an invitation can contain a personal message. [LinkedIn notification controls](https://www.linkedin.com/help/linkedin/answer/a526129), [invitation messages](https://www.linkedin.com/help/linkedin/answer/a546844).
+- **Allegro:** open **Zgody na powiadomienia** and review the **aplikacja Allegro** push column for each notification type. Where separate choices exist, turn off unwanted parcel/status/promotional pushes while retaining chat-message pushes. Consent changes can take **up to two days**, so note the change time before assessing a new event. Allegro's always-sent purchase, parcel and chat notices refer to email; do not treat that as a reason to block the whole app. [Allegro notification controls](https://allegro.pl/pomoc/dla-kupujacych/dane-i-ustawienia-konta/jak-zarzadzac-powiadomieniami-od-allegro-m086dEXv7f5).
+
+### Distinguish notification cards from interruptions
+
+A card visible in the phone shade or watch history shows that a notification was retained there. It does not establish whether it sounded or vibrated, when it first arrived, or whether a new event after a settings change was suppressed. Record the setting-change time and use a fresh event when checking behavior. Existing cards alone do not prove the change failed.
+
+A notification listed as silent on the phone is also **not proof that the watch stays quiet**. Check phone sound/vibration, watch sound/vibration and retained cards separately. If the desired result is no card at all, silence alone is insufficient; use a specific source/category switch where available. Keep wanted communication intact and record any mixed-category limitation.
+
 ## Teams: reduce duplicate and out-of-hours alerts
 
 In Teams mobile, open your profile picture, then **Notifications**. Under the blocking options, enable **When active on other devices** if you want messages to stop interrupting the phone while you use Teams on desktop or the web. Microsoft says mobile notifications resume after several minutes of inactivity. Its statement that calls still notify mobile appears in the iOS section; **test calls separately on the installed Android app while desktop is active**. Review in-meeting and in-app notifications separately. [Teams mobile notification help](https://support.microsoft.com/en-us/teams/notifications-settings/troubleshoot-notifications-in-microsoft-teams-mobile-apps).
@@ -83,6 +105,12 @@ The same manual places phone notification controls at **Watch Settings > Connect
 The connected session aligned all seven watch sleep days with the confirmed private phone schedule, including the Saturday extension. Sleep Focus Smart Notifications remained on, normal calls/texts/apps vibration remained enabled, and manual system DND remained off. A sync was requested and the device list showed Connected afterward. These settings still require actual notification and Sleep Focus tests.
 
 The installed Garmin Connect app exposed **Follow Do Not Disturb Behavior**; it was enabled and read back during the connected session. The App Notifications list was also changed from all applications to 19 selected entries and checked through the complete list. The user separately confirmed one incoming alert reached both devices, with the app and alert type unspecified. The broader delivery and mode checks remain pending. A current primary Garmin support document confirming the DND option's exact behavior was not found in this review. Do not assume it synchronizes the watch's DND state, its native alerts, or silent Android channels. Test an allowed notification with phone DND both on and off.
+
+### Garmin Connect's own phone notifications
+
+In **Garmin Connect > More > Settings > Notifications > Push Notifications**, review the types of notifications Garmin itself sends to the phone. This is separate from **App Notifications**, which selects other apps for watch forwarding, and from native watch alerts below. Inspect individual activity, achievement or social options offered by the installed version; changing watch goal alerts alone does not establish that Garmin Connect's phone pushes are disabled. [Garmin Connect notification preferences](https://support.garmin.com/id-ID/?faq=JIk40ZUqX26kyblDLHgbD8&tab=topics).
+
+A background sync-service card needs its own review. Inspect its Android notification category before hiding that specific card. Preserve Garmin's background operation, Bluetooth connection and notification access, then verify synchronization and wanted phone-to-watch delivery still work. The exact current category label was not established from the available official support-page text; see the [source limitation](sources.md#app-level-filtering-references).
 
 ### Watch-native alerts
 

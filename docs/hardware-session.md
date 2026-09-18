@@ -92,3 +92,13 @@ python -m healthier_notifications --policy .local/policy.personal.json status > 
 ```
 
 Keep `local_only: true` in that profile. Exported public status describes the selected public policy and cannot stand in for the private profile's progress. See the [device guide](device-guide.md) for practical test steps and [README privacy guidance](../README.md#files-and-privacy) before sharing any report.
+
+## Follow-up review: 2026-09-18
+
+User-provided phone and watch photos showed remaining promotional, reaction, memory, summary and routine service notifications. This confirms the earlier category pass was incomplete. A retained card does not establish whether that particular notification sounded or vibrated. The photos and detailed source-by-source review remain private.
+
+The private policy now includes a further source-filter review and a paired phone/watch check. Calls, person-to-person messages (including directly shared media), deliberate reminders, security/safety alerts and the original weekday alarms remain protected. Routine service-update presentation is awaiting the user's choice. Mixed-purpose categories need in-app inspection before suppressing them.
+
+A fresh permission inventory at **2026-09-18 18:03:39 UTC** found no differences in the 203 selected runtime-permission records compared with the initial baseline. Private and public status reports were refreshed from that observation. This scan does not inspect channel settings, app preferences or watch delivery; status remains **needs-review**.
+
+At this follow-up's last settings-access check, USB was connected but the phone was locked. **No additional notification settings have been applied in this follow-up.** The preparation and references in the [device guide](device-guide.md#review-unwanted-notifications-that-remain) are not a device-state or delivery pass. Existing attestations remain historical; no pass was added or renewed. Temporary USB keep-awake was not enabled.

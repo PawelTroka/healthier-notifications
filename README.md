@@ -221,6 +221,8 @@ PowerShell shorthand: `./notifications.ps1 plan` runs the same CLI from any dire
 | `.local/policy.draft.json` | Private inventory-derived policy draft | Ignored until intentionally merged |
 | `.local/policy.personal.json`, `.local/status.personal.md` | Private app choices and local report | Ignored; keep `local_only: true` in the policy |
 | `.local/manual-checks.json` | Dated manual observations and free-text notes | Ignored |
+| `.local/follow-up-*.json` | Private review of remaining notification categories and pending choices | Ignored; preparation is not proof of applied settings |
+| `.codex-remote-attachments/` | User-provided photos and other task attachments | Ignored; may contain private notification contents |
 | `.local/transactions/` | Write-ahead rollback journals | Ignored; retain locally for recovery |
 | `.tools/` | Local portable ADB installation (install for a fresh clone) | Ignored |
 

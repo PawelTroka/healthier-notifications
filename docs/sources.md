@@ -1,6 +1,6 @@
 # Sources and capability boundaries
 
-Reviewed **2026-09-15**. These are primary documentation or source-code references. AOSP behavior is a baseline; commands and parsing must still be checked against the connected ColorOS build. Product pages establish that models exist, not which device the user owns.
+Core references reviewed **2026-09-15**; app-level filtering references added **2026-09-18**. These are primary documentation or source-code references. AOSP behavior is a baseline; commands and parsing must still be checked against the connected ColorOS build. Product pages establish that models exist, not which device the user owns.
 
 ## Android
 
@@ -41,6 +41,7 @@ ColorOS category names, DND exceptions, badge controls, and background-operation
 | [fēnix 9 product family](https://www.garmin.com/en-GB/p/2021175/pn/010-04763-01/) | fēnix 9/Pro family, optional inReach, and 43/47/51 mm case sizes. The connected Garmin Connect label was fenix 9 Pro - inReach, 51mm; see the separate [session observation](hardware-session.md). |
 | [fēnix 9: Enabling Phone Notifications](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-043F879B-FC35-4B22-A025-DF91C157B13F.html) | Watch call/text/app alert controls, Android Garmin Connect app selection, blocked-app list, privacy and timeout. |
 | [Garmin: Which notifications display?](https://support.garmin.com/en-IN/?faq=TLeDN92ZU0AgN4df6HakwA&identifier=780196&tab=topics) | General Android route: Garmin Connect > More > Settings > Notifications > App Notifications. Model-specific controls may differ. |
+| [Garmin Connect notification preferences](https://support.garmin.com/id-ID/?faq=JIk40ZUqX26kyblDLHgbD8&tab=topics) | More > Settings > Notifications > Push Notifications controls Garmin Connect's own phone pushes, separately from App Notifications forwarding. The localized support entry rendered the English instructions during review; inspect the current list before selecting individual types. |
 | [fēnix 9: Focus Modes](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-DF71C212-09EF-431B-87E9-40DEBD0C41A6.html) | Focus-specific settings for situations including sleep and activities. |
 | [fēnix 9: Health and Wellness Alerts](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-EB335B47-6770-4A06-8EEC-8E0355507102.html) | Native daily summary, stress/rest, heart-rate, move and goal alert settings. |
 | [fēnix 9: Phone Connection Alerts](https://www8.garmin.com/manuals/webhelp/GUID-708A8F4D-9A78-49CF-9528-DE109BBCC472/EN-US/GUID-1E446357-A244-44C2-BF72-DE150D68F292.html) | Bluetooth connection alerts under Notifications & Alerts > System Alerts > Phone. |
@@ -64,3 +65,17 @@ Teams rules, selected Garmin apps, ColorOS category choices, and quiet schedules
 ## Installed-app observations
 
 The WhatsApp and Telegram controls in the [connected-session report](hardware-session.md) were read from the installed apps' settings on 2026-09-15. WhatsApp used Android notification categories; Telegram used its own global notification controls and displayed per-conversation exception counts. These observations establish the saved configuration on that installation, not a universal menu layout or successful phone/watch delivery. Raw configuration evidence remains private under `.local/ui/`; no message contents are needed for these checks.
+
+## App-level filtering references
+
+These references guide a second review when a wanted app still produces unwanted notification types. They do not establish that any additional device setting has been changed.
+
+| Source | What it supports and limits |
+| --- | --- |
+| [WhatsApp: Manage notifications](https://faq.whatsapp.com/iphone/troubleshooting/how-to-manage-your-notifications) | Documents Reaction notifications separately from message/group Show notifications and call settings. The readable official page rendered iOS instructions; the Android platform page returned no text during review. Verify the Android app's actual Settings > Notifications controls before relying on an equivalent switch. Do not disable a mixed message channel to remove reactions. |
+| [Instagram: Manage push notifications](https://www.facebook.com/help/instagram/546541825361643?locale=ru_RU) | The readable localized official article distinguishes Messages, Calls, Live and Reels, and other activity/promotional categories. It does not establish a separate current Android DM-reaction switch. A reel sent directly by a person should be reviewed as a message, not assumed to be a recommendation. |
+| [LinkedIn: Email and mobile notifications](https://www.linkedin.com/help/linkedin/answer/a526129) | Profile picture > Settings > Notifications > Notifications you receive; inspect individual category options and push choices. Category names and available subdivisions need live verification. |
+| [LinkedIn: Invitations and invitation messages](https://www.linkedin.com/help/linkedin/answer/a546844) | Connection invitations can include a personal message. Preserve the intended invitation/message options when disabling unrelated network updates. |
+| [Allegro: Manage notifications](https://allegro.pl/pomoc/dla-kupujacych/dane-i-ustawienia-konta/jak-zarzadzac-powiadomieniami-od-allegro-m086dEXv7f5) | Zgody na powiadomienia offers notification types and delivery channels, including application pushes. Consent changes can take up to two days. The article's mandatory purchase, parcel and chat notices refer to email; this does not establish that all such pushes are mandatory. Inspect actual rows to separate parcel updates from chat messages. |
+
+Garmin's [Connect Sync Service dismissal article](https://support.garmin.com/en-US/?faq=jrKblLfaYB1fZZkraDpAs6) was found, but its body did not render during this review. No exact current Android category name or effect is asserted from that page. Verify the service-notification control on the device and keep Garmin's background operation and notification access intact.

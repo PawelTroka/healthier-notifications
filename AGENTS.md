@@ -42,3 +42,9 @@ Session cleanup restored `stay_on_while_plugged_in` to its original value 0 and 
 Preserve write-ahead journals, per-user parsing, shared-UID/system/role protections, live preflight and readback verification. Never interpret unknown parser output as denied/allowed. Device/firmware differences should produce an actionable manual path. Keep permission grants distinct from channel alert behavior and watch delivery. Do not collect notification text or private app databases to obtain configuration state.
 
 Primary capability references and menu/version caveats are in `docs/sources.md` and `docs/device-guide.md`.
+
+## Remaining-noise follow-up, 2026-09-18
+
+User photos show residual automated/promotional notifications. Keep those uploads private under ignored `.codex-remote-attachments/`; never publish their notification contents. The private `.local/follow-up-2026-09-18.json` contains the source-by-source review, protected types and pending routine-update choice. Human-sent reels count as direct messages. Garmin Connect's own Push Notifications are separate from watch forwarding and native watch alerts; its silent sync-service card does not establish an interruption. Allegro needs source filters while preserving seller/buyer direct messages. Inspect in-app controls for mixed categories.
+
+The phone was connected but locked at the last settings-access check. No additional notification settings were changed in this follow-up, and temporary keep-awake was not enabled. A fresh permission scan at 2026-09-18 18:03:39 UTC found all 203 selected permission records unchanged from the initial baseline. The private policy adds two pending follow-up rules and targeted notes without altering app-level choices or alarms; private/public status reports were refreshed. Preserve all historical attestations. Continue after physical unlock and resolve routine-update presentation from the user's pending answer; do not assume every visible card sounded or vibrated.
